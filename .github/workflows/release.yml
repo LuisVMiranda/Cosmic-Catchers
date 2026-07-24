@@ -20,6 +20,8 @@ jobs:
       - run: npm run verify
       - run: npm run package:windows
       - run: npm run verify:desktop
+      # package:windows rebuilds dist/, so recreate the direct-file ZIP last.
+      - run: npm run package:release
       - name: Publish direct-file ZIP and Windows executable
         shell: pwsh
         env:
