@@ -4,7 +4,7 @@ COSMIC CATCHERS — COMO JOGAR
 VERSÃO PRONTA
 -------------
 Executável Windows:
-1. Baixe “Cosmic-Catchers-1.0.1-Windows-Portable.exe”.
+1. Baixe “Cosmic-Catchers-1.0.2-Windows-Portable.exe”.
 2. Abra o executável; nenhuma instalação ou servidor é necessário.
 3. Cada versão distribuída começa sem recordes, vitórias ou desbloqueios salvos.
 4. O progresso passa a ser salvo normalmente após a primeira abertura.
@@ -55,7 +55,7 @@ COSMIC CATCHERS — HOW TO PLAY
 READY-TO-PLAY RELEASE
 ---------------------
 Windows executable:
-1. Download “Cosmic-Catchers-1.0.1-Windows-Portable.exe”.
+1. Download “Cosmic-Catchers-1.0.2-Windows-Portable.exe”.
 2. Open it directly; no installation or server is required.
 3. Every distributed version starts with clean scores, wins, records, and unlocks.
 4. Progress is saved normally after the first launch.
