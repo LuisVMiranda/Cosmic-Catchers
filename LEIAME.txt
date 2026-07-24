@@ -1,0 +1,59 @@
+COSMIC CATCHERS — COMO JOGAR
+================================
+
+VERSÃO PRONTA
+-------------
+1. Extraia todos os arquivos do ZIP para a mesma pasta.
+2. Abra “## JOGUE AQUI.html” com Chrome, Edge ou Firefox.
+3. Não mova ou renomeie separadamente os arquivos MP3 ou o SVG.
+4. Nenhum servidor e nenhuma instalação são necessários para jogar.
+
+CONTROLES
+---------
+Teclado:
+- Fácil: A/Seta Esquerda e D/Seta Direita.
+- Difícil: A/Seta Esquerda, S/Seta Baixo e D/Seta Direita.
+- P pausa; Espaço/Enter inicia ou reinicia.
+
+Mouse:
+- Clique em uma faixa para virar o capturador.
+
+Celular e tablet:
+- Toque diretamente em um capturador para virá-lo.
+- Em telas de até 1100 px, o botão no canto superior esquerdo pausa e continua a partida.
+
+DESENVOLVIMENTO
+---------------
+Requer Node.js 24.
+
+  npm ci
+  npm run build
+  npm run verify
+
+O build atualiza o arquivo jogável na raiz e a cópia de distribuição:
+  ## JOGUE AQUI.html
+  dist/## JOGUE AQUI.html
+
+Crie o pacote distribuível com:
+  npm run package:release
+
+O código-fonte modular fica em src/. Não edite manualmente os HTMLs gerados.
+
+
+COSMIC CATCHERS — HOW TO PLAY
+================================
+
+READY-TO-PLAY RELEASE
+---------------------
+1. Extract every ZIP file into the same folder.
+2. Open “## JOGUE AQUI.html” in Chrome, Edge, or Firefox.
+3. Do not move or rename individual MP3 or SVG files.
+4. No server or installation is required to play.
+
+Mobile/tablet players tap a visible catcher to flip it. At widths up to 1100px, the top-left button pauses and resumes play.
+
+Discos mistério aparecem a partir da fase 6 no Difícil e da fase 9 no Fácil. Eles começam divididos em verde/rosa, piscam no meio do caminho e revelam a cor final antes de chegar ao capturador.
+
+Mystery disks appear from phase 6 in Hard and phase 9 in Easy. They begin split green/pink, flicker halfway down the path, and reveal their final color before reaching the catcher.
+
+Developers use Node.js 24, run `npm ci`, then `npm run build`. The build refreshes the root `## JOGUE AQUI.html` and the identical packaged copy in `dist/`.

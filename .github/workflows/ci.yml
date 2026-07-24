@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run audit
+      - run: npm run verify
+      - run: npx playwright install firefox
+      - run: npm run test:e2e
+      - run: npm run build
+      - run: npm run verify:artifact
+      - run: npm run package:release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cosmic-catchers-direct-file
+          path: dist/Cosmic-Catchers-direct-file.zip
+          if-no-files-found: error
