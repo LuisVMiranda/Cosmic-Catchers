@@ -3,10 +3,16 @@ COSMIC CATCHERS — COMO JOGAR
 
 VERSÃO PRONTA
 -------------
+Executável Windows:
+1. Baixe “Cosmic-Catchers-1.0.0-Windows-Portable.exe”.
+2. Abra o executável; nenhuma instalação ou servidor é necessário.
+3. Cada versão distribuída começa sem recordes, vitórias ou desbloqueios salvos.
+4. O progresso passa a ser salvo normalmente após a primeira abertura.
+
+Versão HTML:
 1. Extraia todos os arquivos do ZIP para a mesma pasta.
 2. Abra “## JOGUE AQUI.html” com Chrome, Edge ou Firefox.
 3. Não mova ou renomeie separadamente os arquivos MP3 ou o SVG.
-4. Nenhum servidor e nenhuma instalação são necessários para jogar.
 
 CONTROLES
 ---------
@@ -37,6 +43,9 @@ O build atualiza o arquivo jogável na raiz e a cópia de distribuição:
 Crie o pacote distribuível com:
   npm run package:release
 
+Crie e verifique o executável portátil do Windows com:
+  npm run release:windows
+
 O código-fonte modular fica em src/. Não edite manualmente os HTMLs gerados.
 
 
@@ -45,10 +54,16 @@ COSMIC CATCHERS — HOW TO PLAY
 
 READY-TO-PLAY RELEASE
 ---------------------
+Windows executable:
+1. Download “Cosmic-Catchers-1.0.0-Windows-Portable.exe”.
+2. Open it directly; no installation or server is required.
+3. Every distributed version starts with clean scores, wins, records, and unlocks.
+4. Progress is saved normally after the first launch.
+
+HTML version:
 1. Extract every ZIP file into the same folder.
 2. Open “## JOGUE AQUI.html” in Chrome, Edge, or Firefox.
 3. Do not move or rename individual MP3 or SVG files.
-4. No server or installation is required to play.
 
 Mobile/tablet players tap a visible catcher to flip it. At widths up to 1100px, the top-left button pauses and resumes play.
 
@@ -56,4 +71,4 @@ Discos mistério aparecem a partir da fase 6 no Difícil e da fase 9 no Fácil. 
 
 Mystery disks appear from phase 6 in Hard and phase 9 in Easy. They begin split green/pink, flicker halfway down the path, and reveal their final color before reaching the catcher.
 
-Developers use Node.js 24, run `npm ci`, then `npm run build`. The build refreshes the root `## JOGUE AQUI.html` and the identical packaged copy in `dist/`.
+Developers use Node.js 24, run `npm ci`, then `npm run build`. Use `npm run release:windows` to build and smoke-test the portable Windows executable.

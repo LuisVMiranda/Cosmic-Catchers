@@ -10,7 +10,9 @@ screen partials + ordered CSS + ES modules + Three.js 0.160.0
                          scripts/build.mjs
                               |
                  one HTML + sibling unchanged assets
-                              |
+                              | \
+                              |  \ Electron portable packaging
+                              |   \ release/*.exe
                       direct file:// launch
 ```
 
@@ -82,10 +84,16 @@ The invariant `!(gameOverPlaying && menuPlaying)` is sampled across Easy, Hard, 
 
 ## Mystery disks
 
-`patterns.js` schedules a single mystery disk on deterministic seeded rounds after phase 6 in Hard and phase 9 in Easy. Its chance starts at 6%, rises one percentage point per phase, and caps at 18%; teleport rounds retain priority so the two special behaviors never collide in one lane. The disk keeps its final gameplay color and delivery side in the plan, renders as a green/pink vertical split, flickers at the halfway trigger, and reveals the final single-color material while continuing uninterrupted toward its catcher.
+`patterns.js` schedules a single mystery disk on deterministic seeded rounds after phase 6 in Hard and phase 9 in Easy. Its chance starts at 6%, rises one percentage point per phase, and caps at 18%; teleport rounds retain priority so the two special behaviors never collide in one lane. The disk keeps its final gameplay color and delivery side in the plan, renders as a green/pink vertical split, pauses and flickers at the halfway trigger, reveals the final single-color material, and then resumes toward its catcher. Delivery and spacing projections include the reveal pause.
 
 ## Persistence and direct-file scope
 
 Storage reads and writes are guarded because browsers may restrict local storage for direct files or private contexts. Existing key names and legacy campaign-best fallback remain unchanged. Moving the game to another filesystem path can give the browser a different `file://` storage origin.
 
 Production never exposes `window.__COSMIC_TEST__`. A separately named test build may expose the frozen test interface for direct-file browser automation.
+
+## Desktop release profile
+
+The Windows portable executable packages only `desktop/`, the verified production HTML, and its unchanged media assets. Electron runs with Node integration disabled, context isolation and sandboxing enabled, external navigation denied, and no developer tools.
+
+Each application version uses its own profile directory. Before the profile's first window is loaded, Electron clears local storage, IndexedDB, service workers, and cache storage, then writes an initialization marker outside the packaged application. This makes every distributed version start with clean stats without erasing a player's progress on later launches of that version. `scripts/verify-desktop.mjs` launches the actual portable executable against an isolated profile and verifies an empty storage snapshot plus zero score and best-score UI.

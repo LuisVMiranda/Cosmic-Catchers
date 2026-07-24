@@ -17,7 +17,11 @@ const browserGlobals = {
 const nodeGlobals = {
   Buffer: "readonly",
   console: "readonly",
+  __dirname: "readonly",
+  module: "readonly",
   process: "readonly",
+  require: "readonly",
+  setTimeout: "readonly",
   structuredClone: "readonly",
   URL: "readonly"
 };
@@ -42,6 +46,11 @@ export default [
   {
     files: ["scripts/**/*.mjs", "*.config.js"],
     languageOptions: { globals: nodeGlobals },
+    rules: qualityRules
+  },
+  {
+    files: ["desktop/**/*.cjs"],
+    languageOptions: { globals: nodeGlobals, sourceType: "commonjs" },
     rules: qualityRules
   },
   {

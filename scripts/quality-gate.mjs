@@ -2,8 +2,8 @@ import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 
 const root = path.resolve(import.meta.dirname, "..");
-const sourceRoots = ["src/js", "scripts", "tests"];
-const extensions = new Set([".js", ".mjs"]);
+const sourceRoots = ["src/js", "desktop", "scripts", "tests"];
+const extensions = new Set([".cjs", ".js", ".mjs"]);
 const failures = [];
 let inspected = 0;
 

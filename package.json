@@ -1,8 +1,11 @@
 {
   "name": "cosmic-catchers",
   "version": "1.0.0",
+  "description": "A direct-file and portable desktop Three.js arcade game.",
+  "author": "LuisVMiranda",
   "private": true,
   "type": "module",
+  "main": "desktop/main.cjs",
   "engines": {
     "node": ">=24 <25"
   },
@@ -14,28 +17,59 @@
     "test:integration": "vitest run tests/integration --coverage.enabled=false",
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
-    "quality": "eslint src scripts tests && node scripts/quality-gate.mjs && jscpd src/js --min-lines 3 --reporters console --exit-code 0 && secretlint \"src/**/*\" \"scripts/**/*\" \"tests/**/*\"",
+    "quality": "eslint src desktop scripts tests && node scripts/quality-gate.mjs && jscpd src/js --min-lines 3 --reporters console --exit-code 0 && secretlint \"src/**/*\" \"desktop/**/*\" \"scripts/**/*\" \"tests/**/*\"",
     "audit": "npm audit --audit-level=high",
     "verify:assets": "node scripts/verify-assets.mjs",
     "verify:artifact": "node scripts/verify-bundle.mjs",
     "verify:release": "node scripts/verify-release.mjs",
+    "verify:desktop": "node scripts/verify-desktop.mjs",
     "package:release": "node scripts/package-release.mjs",
+    "package:windows": "npm run build && electron-builder --win portable --x64",
+    "release:windows": "npm run verify && npm run package:windows && npm run verify:desktop",
     "verify": "node scripts/build.mjs && node scripts/verify-assets.mjs && node scripts/verify-bundle.mjs && npm run quality && npm test && npm run test:coverage && node scripts/package-release.mjs && node scripts/verify-release.mjs"
-  },
-  "dependencies": {
-    "three": "0.160.0"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
     "@playwright/test": "1.61.1",
     "@secretlint/secretlint-rule-preset-recommend": "13.0.4",
     "@vitest/coverage-v8": "4.1.10",
+    "electron": "43.2.0",
+    "electron-builder": "26.15.3",
     "esbuild": "0.28.1",
     "eslint": "10.7.0",
     "fast-check": "4.9.0",
     "jscpd": "5.0.12",
     "jsdom": "29.1.1",
     "secretlint": "13.0.4",
+    "three": "0.160.0",
     "vitest": "4.1.10"
+  },
+  "build": {
+    "appId": "com.luisvmiranda.cosmiccatchers",
+    "productName": "Cosmic Catchers",
+    "artifactName": "Cosmic-Catchers-${version}-Windows-Portable.${ext}",
+    "asar": true,
+    "compression": "maximum",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "desktop/**/*",
+      "dist/## JOGUE AQUI.html",
+      "dist/*.mp3",
+      "dist/*.svg"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/cosmic-catcher.svg",
+      "executableName": "Cosmic Catchers"
+    }
   }
 }

@@ -30,6 +30,7 @@
 | Root playable file exactly matches verified `dist` release | build scripts | `verify-bundle.mjs` byte-parity gate |
 | Encoded `#` filename and direct local assets | release artifact | `direct-file.spec.js` via `pathToFileURL()` |
 | Chrome, Edge, Firefox; phone/tablet orientations | release artifact | Playwright projects and responsive matrix |
+| Portable executable starts with clean stats and preserves later launches | `desktop/profile.cjs`, `desktop/main.cjs` | `desktop-profile.test.js`, packaged `.exe` smoke verification |
 
 Coverage gates:
 

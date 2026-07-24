@@ -18,6 +18,16 @@ Open the repository-root `## JOGUE AQUI.html` directly. A production build refre
 
 `npm run package:release` creates `dist/Cosmic-Catchers-direct-file.zip`. The ZIP root contains the playable HTML, exact media assets, SVG, and checksums.
 
+## Windows executable
+
+```powershell
+npm run release:windows
+```
+
+This creates `release/Cosmic-Catchers-1.0.0-Windows-Portable.exe` and a SHA-256 checksum. It is a self-contained, no-install x64 Windows executable. Each application version uses a separate release profile and clears browser storage before its first launch, so distributed copies begin with zero scores, wins, records, and unlocks. Progress is preserved on later launches of that same version.
+
+The executable is currently unsigned, so Windows SmartScreen may show an unknown-publisher warning. Official tagged GitHub releases publish both the executable and the direct-file ZIP.
+
 ## Controls
 
 - Keyboard: A/Left and D/Right flip Easy lanes; A/Left, S/Down, and D/Right flip Hard lanes; P pauses; Space/Enter starts or restarts.
@@ -30,6 +40,7 @@ Open the repository-root `## JOGUE AQUI.html` directly. A production build refre
 
 ```powershell
 npm run verify
+npm run verify:desktop
 npm run test:e2e
 npm run audit
 ```

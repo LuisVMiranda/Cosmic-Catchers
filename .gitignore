@@ -1,8 +1,8 @@
 node_modules/
 dist/
+release/
 coverage/
 playwright-report/
 test-results/
 .cache/
 *.log
-
