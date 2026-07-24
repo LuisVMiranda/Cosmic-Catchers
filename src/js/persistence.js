@@ -1,4 +1,4 @@
-import { STORAGE_KEYS } from "./config.js";
+import { PROGRESS_STORAGE_KEYS, STORAGE_KEYS } from "./config.js";
 
 function readValue(storage, key) {
   try {
@@ -62,6 +62,15 @@ function write(storage, key, value) {
     // Gameplay must continue when storage is unavailable or read-only.
   }
 }
+function clearProgress(storage) {
+  PROGRESS_STORAGE_KEYS.forEach((key) => {
+    try {
+      storage.removeItem(key);
+    } catch {
+      // Gameplay must continue when storage is unavailable or read-only.
+    }
+  });
+}
 function changed(current, previous, field, mode) {
   return current[field]?.[mode] !== previous?.[field]?.[mode];
 }
@@ -79,4 +88,4 @@ function saveMode({ storage, state, previous, mode }) {
 function saveProgress({ storage, state, previous }) {
   ["easy", "hard"].forEach((mode) => saveMode({ storage, state, previous, mode }));
 }
-export { campaignBest, changed, loadProgress, modeKey, readBoolean, readNumber, readOptionalNumber, readValue, saveMode, saveProgress, write };
+export { campaignBest, changed, clearProgress, loadProgress, modeKey, readBoolean, readNumber, readOptionalNumber, readValue, saveMode, saveProgress, write };

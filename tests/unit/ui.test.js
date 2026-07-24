@@ -19,7 +19,7 @@ import {
 } from "../../src/js/ui.js";
 
 const root = path.resolve(import.meta.dirname, "../..");
-const screenNames = ["ready", "entry", "gameover", "pause", "extraction", "victory"];
+const screenNames = ["ready", "reset", "entry", "gameover", "pause", "extraction", "victory"];
 
 function assembledMarkup() {
   let html = readFileSync(path.join(root, "src", "index.template.html"), "utf8")
@@ -45,7 +45,7 @@ function harness(initial = createInitialState()) {
   });
   const store = { dispatch, getState: () => current, replace: (next) => { current = next; } };
   const audio = {
-    getLevels: vi.fn(() => ({ music: 40, sfx: 55 })),
+    getLevels: vi.fn(() => ({ music: 25, sfx: 25 })),
     handleGesture: vi.fn(),
     setMusicPercent: vi.fn(),
     setSfxPercent: vi.fn()
@@ -150,7 +150,7 @@ describe("full UI rendering and controls", () => {
     expect(byId("lane-label-middle").classList.contains("hidden")).toBe(false);
     expect(byId("new-record").classList.contains("hidden")).toBe(false);
     expect(byId("shell").style.getPropertyValue("--playfield-center-x")).toBe("123px");
-    expect(byId("music-level-value").textContent).toBe("40%");
+    expect(byId("music-level-value").textContent).toBe("25%");
   });
 
   it("animates streak increase and reset and renders locked/unlocked run types", () => {
@@ -187,6 +187,22 @@ describe("full UI rendering and controls", () => {
     expect(test.dispatch).toHaveBeenCalledWith({ type: "SET_LANGUAGE", language: "pt-BR" });
     expect(test.dispatch).toHaveBeenCalledWith({ type: "SELECT_MODE", mode: "hard" });
     expect(test.dispatch).toHaveBeenCalledWith({ type: "SELECT_RUN_TYPE", runType: "campaign" });
+  });
+
+  it("requires two confirmations before dispatching a stats reset", () => {
+    const test = harness();
+    byId("reset-stats-button").click();
+    expect(byId("reset-screen").classList.contains("hidden")).toBe(false);
+    expect(byId("reset-step-one").classList.contains("hidden")).toBe(false);
+    byId("reset-continue-button").click();
+    expect(byId("reset-step-one").classList.contains("hidden")).toBe(true);
+    expect(byId("reset-step-two").classList.contains("hidden")).toBe(false);
+    byId("reset-back-button").click();
+    expect(byId("reset-step-one").classList.contains("hidden")).toBe(false);
+    byId("reset-continue-button").click();
+    byId("reset-confirm-button").click();
+    expect(test.dispatch).toHaveBeenCalledWith({ type: "RESET_PROGRESS" });
+    expect(byId("reset-screen").classList.contains("hidden")).toBe(true);
   });
 
   it("dispatches every navigation action and isolates mobile pause bubbling", () => {

@@ -72,6 +72,14 @@ function createUi({ store: store2, audio: audio2, renderer: renderer2 }) {
     streakCard: byId("streak-card"),
     bestLabel: byId("best-label"),
     ready: byId("ready-screen"),
+    reset: byId("reset-screen"),
+    resetStepOne: byId("reset-step-one"),
+    resetStepTwo: byId("reset-step-two"),
+    resetStatsButton: byId("reset-stats-button"),
+    resetContinueButton: byId("reset-continue-button"),
+    resetCancelButton: byId("reset-cancel-button"),
+    resetBackButton: byId("reset-back-button"),
+    resetConfirmButton: byId("reset-confirm-button"),
     entering: byId("entry-screen"),
     gameover: byId("gameover-screen"),
     pause: byId("pause-screen"),
@@ -120,12 +128,16 @@ function createUi({ store: store2, audio: audio2, renderer: renderer2 }) {
   let localizedLanguage = "";
   let toastTimer = 0;
   let renderedStreak = 0;
+  let resetStep = 0;
   function renderLocalization(state) {
     if (localizedLanguage === state.language) return;
     localizedLanguage = state.language;
     localizeDocument(state.language);
     elements.language.textContent = state.language === "en" ? "PT" : "EN";
     elements.language.setAttribute("aria-label", translate(state.language, state.language === "en" ? "switchToPt" : "switchToEn"));
+    const resetLabel = translate(state.language, "resetStatsLabel");
+    elements.resetStatsButton.setAttribute("aria-label", resetLabel);
+    elements.resetStatsButton.title = resetLabel;
   }
   function renderHud(state) {
     elements.score.textContent = String(state.score);
@@ -157,6 +169,10 @@ function createUi({ store: store2, audio: audio2, renderer: renderer2 }) {
     setHidden(elements.pause, state.status !== "paused");
     setHidden(elements.extraction, state.status !== "extraction");
     setHidden(elements.victory, state.status !== "victory");
+    setHidden(elements.reset, resetStep === 0);
+    setHidden(elements.resetStepOne, resetStep !== 1);
+    setHidden(elements.resetStepTwo, resetStep !== 2);
+    elements.reset.setAttribute("aria-labelledby", resetStep === 2 ? "reset-confirm-title" : "reset-title");
     const finale = getFinaleProgress({ mode: state.mode, completedBatches: state.completedBatches });
     elements.extractionCountdown.textContent = translate(state.language, "extractionRemaining", { count: finale.total });
     elements.readyIntro.textContent = translate(state.language, state.mode === "hard" ? "readyIntroHard" : "readyIntroEasy");
@@ -239,6 +255,41 @@ function createUi({ store: store2, audio: audio2, renderer: renderer2 }) {
     elements.toast.classList.add("show");
     toastTimer = window.setTimeout(() => elements.toast.classList.remove("show"), duration * 1e3);
   }
+  function renderResetPrompt() {
+    render(store2.getState());
+  }
+  function closeResetPrompt() {
+    resetStep = 0;
+    renderResetPrompt();
+    elements.resetStatsButton.focus();
+  }
+  elements.resetStatsButton.addEventListener("click", () => {
+    audio2.handleGesture();
+    resetStep = 1;
+    renderResetPrompt();
+    elements.resetContinueButton.focus();
+  });
+  elements.resetCancelButton.addEventListener("click", () => {
+    audio2.handleGesture();
+    closeResetPrompt();
+  });
+  elements.resetContinueButton.addEventListener("click", () => {
+    audio2.handleGesture();
+    resetStep = 2;
+    renderResetPrompt();
+    elements.resetConfirmButton.focus();
+  });
+  elements.resetBackButton.addEventListener("click", () => {
+    audio2.handleGesture();
+    resetStep = 1;
+    renderResetPrompt();
+    elements.resetContinueButton.focus();
+  });
+  elements.resetConfirmButton.addEventListener("click", () => {
+    audio2.handleGesture();
+    closeResetPrompt();
+    store2.dispatch({ type: "RESET_PROGRESS" });
+  });
   function bindAudioPanel(control, toggle, scale, channel) {
     toggle.addEventListener("click", () => {
       audio2.handleGesture();

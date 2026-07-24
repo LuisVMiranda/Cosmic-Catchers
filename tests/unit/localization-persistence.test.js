@@ -3,6 +3,7 @@ import { TRANSLATIONS, localizeDocument, translate } from "../../src/js/localiza
 import {
   campaignBest,
   changed,
+  clearProgress,
   loadProgress,
   modeKey,
   readBoolean,
@@ -19,7 +20,8 @@ function memoryStorage(entries = {}) {
   return {
     values,
     getItem: (key) => values.get(key) ?? null,
-    setItem: (key, value) => values.set(key, String(value))
+    setItem: (key, value) => values.set(key, String(value)),
+    removeItem: (key) => values.delete(key)
   };
 }
 
@@ -114,5 +116,25 @@ describe("persistence compatibility", () => {
     expect(storage.values.get(STORAGE_KEYS.endlessUnlockedEasy)).toBe("true");
     expect(changed(state, previous, "winsByMode", "hard")).toBe(false);
     expect(() => write({ setItem: () => { throw new Error("readonly"); } }, "x", 1)).not.toThrow();
+  });
+
+  it("clears all game progress while preserving preferences", () => {
+    const storage = memoryStorage({
+      [STORAGE_KEYS.language]: "pt-BR",
+      [STORAGE_KEYS.mode]: "hard",
+      [STORAGE_KEYS.volume]: '{"music":20}',
+      [STORAGE_KEYS.bestEasy]: "9",
+      [STORAGE_KEYS.campaignBestHard]: "12",
+      [STORAGE_KEYS.endlessBestEasy]: "8",
+      [STORAGE_KEYS.winsHard]: "2",
+      [STORAGE_KEYS.fastestEasy]: "41",
+      [STORAGE_KEYS.endlessUnlockedHard]: "true"
+    });
+    clearProgress(storage);
+    expect(storage.values).toEqual(new Map([
+      [STORAGE_KEYS.language, "pt-BR"],
+      [STORAGE_KEYS.mode, "hard"],
+      [STORAGE_KEYS.volume, '{"music":20}']
+    ]));
   });
 });

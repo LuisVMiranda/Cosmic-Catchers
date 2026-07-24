@@ -65,5 +65,31 @@ describe("game state transitions", () => {
     const unlocked = { ...locked, endlessUnlockedByMode: { easy: false, hard: true } };
     expect(dispatch(unlocked, "SELECT_RUN_TYPE", { runType: "endless" }).runType).toBe("endless");
   });
-});
 
+  it("resets all progress and returns to the ready menu without changing preferences", () => {
+    const state = {
+      ...createInitialState({ mode: "hard", language: "pt-BR" }),
+      status: "victory",
+      runType: "endless",
+      campaignBestByMode: { easy: 10, hard: 20 },
+      endlessBestByMode: { easy: 30, hard: 40 },
+      winsByMode: { easy: 2, hard: 3 },
+      fastestClearByMode: { easy: 50, hard: 60 },
+      endlessUnlockedByMode: { easy: true, hard: true },
+      best: 40
+    };
+    const reset = dispatch(state, "RESET_PROGRESS");
+    expect(reset).toMatchObject({
+      status: "ready",
+      mode: "hard",
+      language: "pt-BR",
+      runType: "campaign",
+      best: 0,
+      campaignBestByMode: { easy: 0, hard: 0 },
+      endlessBestByMode: { easy: 0, hard: 0 },
+      winsByMode: { easy: 0, hard: 0 },
+      fastestClearByMode: { easy: null, hard: null },
+      endlessUnlockedByMode: { easy: false, hard: false }
+    });
+  });
+});

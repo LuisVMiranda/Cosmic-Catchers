@@ -13,6 +13,8 @@
 @keyframes streak-increase { 50% { border-color:#fff; background:rgba(201,255,98,.24); transform:scale(1.06); } }
 @keyframes streak-reset { 50% { opacity:.55; } }
 .language-button { position:absolute; top:22px; right:28px; z-index:12; min-width:50px; padding:9px 10px; color:var(--lime); font-size:10px; letter-spacing:.12em; text-transform:uppercase; box-shadow:0 7px 16px rgba(3,1,10,.5); pointer-events:auto; }
+.reset-button { display:grid; width:44px; height:44px; margin:12px auto 0; padding:0; border-color:rgba(255,255,255,.28); background:rgba(8,5,20,.38); color:var(--muted); font-size:25px; line-height:1; place-items:center; }
+.reset-button:hover, .reset-button:focus-visible { color:var(--lime); }
 .audio-controls { position:absolute; top:78px; left:28px; z-index:12; display:flex; gap:6px; align-items:flex-start; pointer-events:auto; }
 .audio-control { display:flex; align-items:stretch; min-width:34px; padding:0; border:1px solid rgba(255,255,255,.2); background:var(--panel); color:var(--muted); font-size:9px; letter-spacing:.1em; box-shadow:0 7px 16px rgba(3,1,10,.52); text-transform:uppercase; }
 .audio-toggle { display:grid; width:34px; height:32px; padding:0; border:0; background:transparent; place-items:center; color:var(--lime); }

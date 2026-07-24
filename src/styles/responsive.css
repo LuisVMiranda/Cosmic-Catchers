@@ -14,7 +14,9 @@
   .toast { top:142px; min-width:190px; max-width:calc(100vw - 24px); font-size:9px; }
   .panel { width:min(560px,calc(90vw - 20px)); padding:24px 18px 20px; }
   .panel.compact { width:min(460px,calc(90vw - 20px)); }
+  .reset-button { margin-top:8px; }
   .panel h2 { margin:15px 0 12px; font-size:clamp(38px,12vw,58px); }
+  #reset-screen .reset-panel h2 { font-size:clamp(30px,9vw,48px); }
   .intro { margin-bottom:14px; }
   .rules, .mode-grid { margin-bottom:14px; }
   .victory-results { grid-template-columns:1fr 1fr; }
@@ -41,6 +43,7 @@
   .toast { top:62px; }
   .panel, .panel.compact { margin-top:0; padding:14px 22px 12px; }
   .panel h2 { margin:9px 0; font-size:40px; }
+  #reset-screen .reset-panel h2 { font-size:36px; }
   .intro { margin-bottom:8px; font-size:11px; line-height:1.35; }
   .rules { gap:7px; margin-bottom:8px; }
   .rules div { gap:4px; padding:7px; }

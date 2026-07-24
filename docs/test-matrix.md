@@ -7,7 +7,7 @@
 | Seeded plans and explicit phase boundaries | `patterns.js`, `game-loop.js` | `patterns.test.js` (1,000 runs/property group), `patterns-negative.test.js` |
 | Invalid plans and fallback generation | `patterns.js`, `game-loop.js` | `patterns-negative.test.js`, `game-loop-fallback.test.js` |
 | Success, duplicate, stale, wrong side, flipping, invalid lane | `state.js` | `state.test.js`, `state-exhaustive.test.js` |
-| Records, wins, fastest clear, unlocks | `state.js`, `persistence.js` | `state-exhaustive.test.js`, `localization-persistence.test.js` |
+| Records, wins, fastest clear, unlocks, two-step reset, and localized reset-panel overflow | `state.js`, `persistence.js`, `ui.js`, responsive CSS | `state.test.js`, `state-exhaustive.test.js`, `localization-persistence.test.js`, `ui.test.js`, direct-file E2E at 390/727/1280px |
 | Empty, legacy, malformed, inaccessible storage | `persistence.js`, `audio.js` | `localization-persistence.test.js`, `audio-sequencing.test.js` |
 | English/Portuguese key and placeholder parity | `localization.js` | `localization-persistence.test.js` |
 | Loop start/stop/idempotence/delta clamp/order | `game-loop.js` | `game-loop.test.js`, `game-loop-branches.test.js` |
@@ -22,6 +22,7 @@
 | Pause visibility, size, localized state, propagation | `ui.js`, responsive CSS | `ui.test.js`, direct-file E2E matrix |
 | Easy/Hard game-over exclusivity and one-second gap | `audio.js` | `audio.test.js`, `audio-sequencing.test.js` |
 | Ended/watchdog/hard cap/rejected play/gesture/races | `audio.js` | `audio-sequencing.test.js` |
+| Calmer 25% music and SFX defaults | `audio.js`, `config.js`, `ui.js` | `audio-sequencing.test.js`, `ui.test.js` |
 | Late menu/game-over `play()` resolution and 1,000 seeded interleavings | `audio.js` | `audio-sequencing.test.js` |
 | Restart/menu cancellation and duplicate failure | `audio.js` | `audio-sequencing.test.js` |
 | Victory soundtrack asset and exclusive victory-to-menu handoff | `audio.js`, build manifest | `audio-sequencing.test.js`, artifact checks |

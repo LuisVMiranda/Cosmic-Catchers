@@ -191,6 +191,13 @@ describe("audio controller sequencing", () => {
     expect(elements.menu.playCount).toBeGreaterThanOrEqual(2);
   });
 
+  it("starts new players at the calmer 25 percent defaults", () => {
+    expect(audio.getLevels()).toEqual({ music: 25, sfx: 25 });
+    audio.init();
+    expect(elements.menu.volume).toBe(0.25);
+    expect(elements.collect[0].volume).toBe(0.25);
+  });
+
   it("persists and applies music and SFX levels", () => {
     audio.setMusicPercent(90);
     audio.setSfxPercent(25);

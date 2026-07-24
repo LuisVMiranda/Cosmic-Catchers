@@ -36,8 +36,8 @@ var GAME = Object.freeze({
   entryTransitionDuration: 1.45,
   musicCap: 0.8,
   sfxCap: 0.9,
-  defaultMusicPercent: 40,
-  defaultSfxPercent: 55,
+  defaultMusicPercent: 25,
+  defaultSfxPercent: 25,
   volumeVersion: 2,
   maxPlanRetries: 8,
   maxActiveBatches: 2,
@@ -142,6 +142,20 @@ var STORAGE_KEYS = Object.freeze({
   endlessUnlockedEasy: "cosmic-catchers-endless-unlocked-easy",
   endlessUnlockedHard: "cosmic-catchers-endless-unlocked-hard"
 });
+var PROGRESS_STORAGE_KEYS = Object.freeze([
+  STORAGE_KEYS.bestEasy,
+  STORAGE_KEYS.bestHard,
+  STORAGE_KEYS.campaignBestEasy,
+  STORAGE_KEYS.campaignBestHard,
+  STORAGE_KEYS.endlessBestEasy,
+  STORAGE_KEYS.endlessBestHard,
+  STORAGE_KEYS.winsEasy,
+  STORAGE_KEYS.winsHard,
+  STORAGE_KEYS.fastestEasy,
+  STORAGE_KEYS.fastestHard,
+  STORAGE_KEYS.endlessUnlockedEasy,
+  STORAGE_KEYS.endlessUnlockedHard
+]);
 var AUDIO_FILES = Object.freeze({
   menu: "cosmic-catchers-menu-soundtrack.mp3",
   game: "cosmic-catchers-game-soundtrack.mp3",
@@ -162,4 +176,4 @@ function clamp(value, minimum, maximum) {
 function lerp(start, end, amount) {
   return start + (end - start) * amount;
 }
-export { AUDIO_FILES, COLORS, GAME, MODE_CONFIG, SIDE_Y, STORAGE_KEYS, clamp, getModeConfig, lerp, normalizeMode };
+export { AUDIO_FILES, COLORS, GAME, MODE_CONFIG, PROGRESS_STORAGE_KEYS, SIDE_Y, STORAGE_KEYS, clamp, getModeConfig, lerp, normalizeMode };

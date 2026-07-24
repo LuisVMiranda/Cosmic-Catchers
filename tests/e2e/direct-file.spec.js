@@ -64,6 +64,92 @@ test("preserves existing storage keys after direct-file reload", async ({ page }
   expect(failures).toEqual([]);
 });
 
+test("requires two confirmations and clears only game progress", async ({ page }) => {
+  const failures = await openGame(page);
+  await page.evaluate(() => {
+    localStorage.setItem("cosmic-catchers-language", "pt-BR");
+    localStorage.setItem("cosmic-catchers-mode", "hard");
+    localStorage.setItem("cosmic-catchers-volume", '{"music":20,"sfx":30}');
+    localStorage.setItem("cosmic-catchers-campaign-best-hard", "17");
+    localStorage.setItem("cosmic-catchers-endless-best-hard", "11");
+    localStorage.setItem("cosmic-catchers-wins-hard", "3");
+    localStorage.setItem("cosmic-catchers-fastest-hard", "42");
+    localStorage.setItem("cosmic-catchers-endless-unlocked-hard", "true");
+  });
+  await page.reload({ waitUntil: "load" });
+  await expect(page.locator("#reset-stats-button")).toBeVisible();
+  await page.locator("#reset-stats-button").click();
+  await expect(page.locator("#reset-screen")).toBeVisible();
+  await page.locator("#reset-continue-button").click();
+  await expect(page.locator("#reset-step-two")).toBeVisible();
+  await page.locator("#reset-confirm-button").click();
+  await expect(page.locator("#reset-screen")).toBeHidden();
+  const result = await page.evaluate(() => {
+    const state = window.__COSMIC_TEST__.store.getState();
+    return {
+      state: {
+        best: state.best,
+        campaignBestByMode: state.campaignBestByMode,
+        endlessBestByMode: state.endlessBestByMode,
+        endlessUnlockedByMode: state.endlessUnlockedByMode,
+        language: state.language,
+        mode: state.mode,
+        runType: state.runType,
+        status: state.status,
+        winsByMode: state.winsByMode
+      },
+      storage: Object.fromEntries(Object.keys(localStorage).map((key) => [key, localStorage.getItem(key)]))
+    };
+  });
+  expect(result.state).toMatchObject({
+    best: 0,
+    campaignBestByMode: { easy: 0, hard: 0 },
+    endlessBestByMode: { easy: 0, hard: 0 },
+    endlessUnlockedByMode: { easy: false, hard: false },
+    language: "pt-BR",
+    mode: "hard",
+    runType: "campaign",
+    status: "ready",
+    winsByMode: { easy: 0, hard: 0 }
+  });
+  expect(result.storage).toMatchObject({
+    "cosmic-catchers-language": "pt-BR",
+    "cosmic-catchers-mode": "hard",
+    "cosmic-catchers-volume": '{"music":20,"sfx":30}'
+  });
+  for (const key of [
+    "cosmic-catchers-best-easy", "cosmic-catchers-best-hard",
+    "cosmic-catchers-campaign-best-easy", "cosmic-catchers-campaign-best-hard",
+    "cosmic-catchers-endless-best-easy", "cosmic-catchers-endless-best-hard",
+    "cosmic-catchers-wins-easy", "cosmic-catchers-wins-hard",
+    "cosmic-catchers-fastest-easy", "cosmic-catchers-fastest-hard",
+    "cosmic-catchers-endless-unlocked-easy", "cosmic-catchers-endless-unlocked-hard"
+  ]) expect(result.storage[key]).toBeUndefined();
+  expect(failures).toEqual([]);
+});
+
+test("keeps both localized reset steps inside the panel", async ({ page }) => {
+  for (const viewport of [{ width: 390, height: 844 }, { width: 727, height: 651 }, { width: 1280, height: 720 }]) {
+    await page.setViewportSize(viewport);
+    await openGame(page);
+    await page.evaluate(() => localStorage.setItem("cosmic-catchers-language", "pt-BR"));
+    await page.reload({ waitUntil: "load" });
+    await page.locator("#reset-stats-button").click();
+    for (const nextStep of ["#reset-step-one", "#reset-step-two"]) {
+      const overflow = await page.evaluate((stepSelector) => {
+        const panel = document.querySelector("#reset-screen .reset-panel");
+        const step = document.querySelector(stepSelector);
+        const nodes = [panel, step, ...step.querySelectorAll("*")].filter(Boolean);
+        return nodes.filter((node) => node.scrollWidth > node.clientWidth + 1).map((node) => node.id || node.className);
+      }, nextStep);
+      expect(overflow).toEqual([]);
+      if (nextStep === "#reset-step-one") await page.locator("#reset-continue-button").click();
+    }
+    await page.locator("#reset-back-button").click();
+    await page.locator("#reset-cancel-button").click();
+  }
+});
+
 test("renders every state overlay without changing the fixed DOM contract", async ({ page }) => {
   const failures = await openGame(page);
   for (const status of ["ready", "entering", "playing", "paused", "extraction", "gameover", "victory"]) {

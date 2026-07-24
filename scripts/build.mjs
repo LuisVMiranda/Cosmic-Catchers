@@ -7,7 +7,7 @@ const root = path.resolve(import.meta.dirname, "..");
 const dist = path.join(root, "dist");
 const productionFilename = "## JOGUE AQUI.html";
 const testBuild = process.argv.includes("--test");
-const screenNames = ["ready", "entry", "gameover", "pause", "extraction", "victory"];
+const screenNames = ["ready", "reset", "entry", "gameover", "pause", "extraction", "victory"];
 const styleNames = ["base", "layout", "screens", "responsive"];
 
 async function readSource(relativePath) {

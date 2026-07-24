@@ -231,6 +231,9 @@ function selectRunType(state, command) {
 function setLanguage(state, command) {
   return { ...state, language: command.language };
 }
+function resetProgress(state) {
+  return createInitialState({ mode: state.mode, language: state.language, seed: state.seed });
+}
 function returnToMenu(state) {
   if (!["gameover", "victory"].includes(state.status)) return state;
   return {
@@ -350,6 +353,7 @@ var COMMAND_HANDLERS = Object.freeze({
   SELECT_MODE: selectMode,
   SELECT_RUN_TYPE: selectRunType,
   SET_LANGUAGE: setLanguage,
+  RESET_PROGRESS: resetProgress,
   RETURN_TO_MENU: returnToMenu,
   START_RUN: startRun,
   BEGIN_RUN_TRANSITION: beginRunTransition,
@@ -449,4 +453,4 @@ function createStateStore(initialState2, onChange) {
     }
   };
 }
-export { COMMAND_HANDLERS, activeBestMap, advanceExtraction, advanceFlip, advanceRunTime, advanceRunTransition, appendUnique, beginRunTransition, cloneCatchers, collectDisk, collectionKey, completeBatch, completeRun, createCatcher, createCatchers, createInitialState, createStateStore, failRun, finishFlip, finishRun, flipCatcher, getCatcherFailureReason, isDuplicateCollection, isStaleCollection, modeMap, pauseRun, phaseFor, resetRun, resumeRun, returnToMenu, selectMode, selectRunType, setCooldown, setLanguage, spawnBatch, startRun, transitionState, updateBest, updateRecentColorPatterns, updateSlowQueue, updateSlowSequence, validRunType };
+export { COMMAND_HANDLERS, activeBestMap, advanceExtraction, advanceFlip, advanceRunTime, advanceRunTransition, appendUnique, beginRunTransition, cloneCatchers, collectDisk, collectionKey, completeBatch, completeRun, createCatcher, createCatchers, createInitialState, createStateStore, failRun, finishFlip, finishRun, flipCatcher, getCatcherFailureReason, isDuplicateCollection, isStaleCollection, modeMap, pauseRun, phaseFor, resetProgress, resetRun, resumeRun, returnToMenu, selectMode, selectRunType, setCooldown, setLanguage, spawnBatch, startRun, transitionState, updateBest, updateRecentColorPatterns, updateSlowQueue, updateSlowSequence, validRunType };

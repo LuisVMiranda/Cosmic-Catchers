@@ -4,7 +4,7 @@ import { createEffects } from "./effects.js";
 import { createGameLoop } from "./game-loop.js";
 import { bindInput } from "./input.js";
 import { translate } from "./localization.js";
-import { loadProgress, saveProgress } from "./persistence.js";
+import { clearProgress, loadProgress, saveProgress } from "./persistence.js";
 import { createRenderer } from "./renderer.js";
 import { createInitialState, createStateStore } from "./state.js";
 import { createUi } from "./ui.js";
@@ -81,7 +81,8 @@ function syncVictoryEffects({ state, previous, effects: effects2 }) {
 }
 function attachStateEffects({ state, previous, command, ui: ui2, audio: audio2, effects: effects2 }) {
   persistPreferences({ state, previous });
-  saveProgress({ storage: window.localStorage, state, previous });
+  if (command.type === "RESET_PROGRESS") clearProgress(window.localStorage);
+  else saveProgress({ storage: window.localStorage, state, previous });
   syncAudio({ state, previous, command, audio: audio2 });
   syncVictoryEffects({ state, previous, effects: effects2 });
   handleFlipEffect({ state, command, ui: ui2, audio: audio2 });
