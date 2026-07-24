@@ -1,0 +1,20 @@
+<section id="gameover-screen" class="screen hidden" aria-labelledby="gameover-title">
+      <div class="panel compact gameover-panel">
+        <p class="kicker" data-i18n="gameOverKicker">Color mismatch</p>
+        <h2 id="gameover-title"><span data-i18n="runTitle">Run</span> <em data-i18n="overTitle">over</em></h2>
+        <p id="gameover-message" class="intro"></p>
+        <div class="results">
+          <div><span data-i18n="finalScoreLabel">Score</span><strong id="final-score">0</strong></div>
+          <div><span data-i18n="finalBestLabel">Best</span><strong id="final-best">0</strong></div>
+          <div><span data-i18n="finalPhaseLabel">Phase reached</span><strong id="final-phase">1</strong></div>
+          <div><span data-i18n="finalLongestStreakLabel">Longest streak</span><strong id="final-longest-streak">×0</strong></div>
+        </div>
+        <div class="failure-details">
+          <div><span data-i18n="failureLaneLabel">Failure lane</span><strong id="final-failure-lane">—</strong></div>
+          <div><span data-i18n="failureReasonLabel">Failure reason</span><strong id="final-failure-reason">Color mismatch</strong></div>
+        </div>
+        <p id="new-record" class="record hidden" data-i18n="newRecord">New record registered</p>
+        <div class="gameover-actions"><button id="restart-button" class="primary-button" type="button" data-i18n="restartButton">Play again</button><button id="main-menu-button" class="secondary-button" type="button" data-i18n="backToMenu">Main menu</button></div>
+        <p class="note" data-i18n="restartNote">Space or Enter also restarts</p>
+      </div>
+    </section>

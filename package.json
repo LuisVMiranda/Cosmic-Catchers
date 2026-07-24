@@ -1,0 +1,41 @@
+{
+  "name": "cosmic-catchers",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "npm run test:unit && npm run test:property && npm run test:integration",
+    "test:unit": "vitest run tests/unit --coverage.enabled=false",
+    "test:property": "vitest run tests/property --coverage.enabled=false",
+    "test:integration": "vitest run tests/integration --coverage.enabled=false",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "quality": "eslint src scripts tests && node scripts/quality-gate.mjs && jscpd src/js --min-lines 3 --reporters console --exit-code 0 && secretlint \"src/**/*\" \"scripts/**/*\" \"tests/**/*\"",
+    "audit": "npm audit --audit-level=high",
+    "verify:assets": "node scripts/verify-assets.mjs",
+    "verify:artifact": "node scripts/verify-bundle.mjs",
+    "verify:release": "node scripts/verify-release.mjs",
+    "package:release": "node scripts/package-release.mjs",
+    "verify": "node scripts/build.mjs && node scripts/verify-assets.mjs && node scripts/verify-bundle.mjs && npm run quality && npm test && npm run test:coverage && node scripts/package-release.mjs && node scripts/verify-release.mjs"
+  },
+  "dependencies": {
+    "three": "0.160.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.61.1",
+    "@secretlint/secretlint-rule-preset-recommend": "13.0.4",
+    "@vitest/coverage-v8": "4.1.10",
+    "esbuild": "0.28.1",
+    "eslint": "10.7.0",
+    "fast-check": "4.9.0",
+    "jscpd": "5.0.12",
+    "jsdom": "29.1.1",
+    "secretlint": "13.0.4",
+    "vitest": "4.1.10"
+  }
+}

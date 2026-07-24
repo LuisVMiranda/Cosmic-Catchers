@@ -1,0 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
+
+:root { color-scheme: dark; --ink:#fff7ff; --muted:#b9a7c5; --lime:#c9ff62; --pink:#ff557f; --cyan:#82ebff; --panel:rgba(8,5,20,.86); }
+* { box-sizing:border-box; }
+html, body { width:100%; height:100%; margin:0; overflow:hidden; background:#080512; }
+body { color:var(--ink); font-family:"Roboto Medium",Roboto,Arial,sans-serif; font-weight:500; }
+button, input { font:inherit; }
+button { border:1px solid rgba(255,255,255,.22); border-radius:0; background:rgba(22,8,39,.75); color:var(--ink); cursor:pointer; }
+button:hover, button:focus-visible { border-color:var(--lime); outline:0; }
+.shell { --playfield-center-x:50vw; position:relative; width:100vw; height:100vh; min-width:900px; min-height:600px; overflow:hidden; }
+#game-canvas { position:absolute; inset:0; width:100%; height:100%; display:block; touch-action:none; user-select:none; -webkit-user-select:none; }

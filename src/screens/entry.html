@@ -1,0 +1,12 @@
+<section id="entry-screen" class="screen entry-screen hidden" aria-label="Entering the cosmic field">
+      <svg class="black-hole" viewBox="0 0 400 400" role="img" aria-hidden="true">
+        <defs>
+          <radialGradient id="black-hole-glow"><stop offset="0" stop-color="#050008"/><stop offset="58%" stop-color="#050008"/><stop offset="75%" stop-color="#8c4de8" stop-opacity=".82"/><stop offset="100%" stop-color="#82ebff" stop-opacity="0"/></radialGradient>
+          <linearGradient id="accretion-color"><stop offset="0" stop-color="#82ebff" stop-opacity="0"/><stop offset="35%" stop-color="#c9ff62"/><stop offset="68%" stop-color="#ff557f"/><stop offset="100%" stop-color="#8c4de8" stop-opacity="0"/></linearGradient>
+          <filter id="black-hole-blur"><feGaussianBlur stdDeviation="7"/></filter>
+        </defs>
+        <g class="black-hole-rings"><ellipse cx="200" cy="200" rx="142" ry="38" fill="none" stroke="url(#accretion-color)" stroke-width="15" filter="url(#black-hole-blur)"/><ellipse cx="200" cy="200" rx="126" ry="27" fill="none" stroke="#fff8ff" stroke-opacity=".72" stroke-width="3"/></g>
+        <circle class="black-hole-core" cx="200" cy="200" r="80" fill="url(#black-hole-glow)"/>
+      </svg>
+      <p class="entry-label" data-i18n="enteringField">Entering the cosmic field</p>
+    </section>
